@@ -1,4 +1,6 @@
+import type { IProduto } from 'interfaces/produto'
 import service from '../../services/venda'
+import produtoService from '../../services/produto'
 
 const getAll = async () => {
   const result = await service.getAll()
@@ -11,14 +13,22 @@ const getById = async (id: string) => {
   return result
 }
 
-const create = async (data: number, total: number, id_cliente: number) => {
-  const result = await service.create(data, total, id_cliente)
+const create = async (cliente: number, produtos: IProduto[]) => {
+  let products: IProduto[] = []
 
-  if (result) {
-    const produto = await service.getById(result.id)
-    return produto
-  }
-  return null
+  products.forEach(async produto => {
+    const result = await produtoService.getById(produto.id)
+
+    products.push({
+      id: produto.id,
+      quantidade: produto.quantidade,
+      preco: produto.preco,
+    })
+  })
+
+  const result = await service.create(cliente, products)
+
+  return result ?? null
 }
 
 const update = async (

@@ -7,6 +7,7 @@ import {
   remove,
   update,
 } from '../../controllers/venda'
+import ErrorApi from 'interfaces/errorApi'
 
 const routes = Router()
 
@@ -38,16 +39,15 @@ routes.get('/:id', async (req, res) => {
 })
 
 routes.post('/', async (req, res) => {
-  const { data, total, idCliente } = req.body
+  const { idCliente, produtos } = req.body
 
-  if (!data || !total || !idCliente) {
-    res.status(400).json({
-      message: 'data, total, idCliente fields is required.',
-    })
+  // idProduto, quantidade
+
+  if (!idCliente || !produtos) {
+    throw new ErrorApi('idCliente and produtos fields is required.', 400)
   }
 
-  const result = await create(data, total, idCliente)
-
+  const result = await create(idCliente, produtos)
   res.status(201).json(result)
 })
 

@@ -22,7 +22,7 @@ routes.get('/:id', async (req, res) => {
 
   if (!result) {
     res.status(404).json({
-      message: 'Fornecedor is not exist.',
+      message: 'Fornecedor not exists.',
     })
   } else {
     res.json(result)

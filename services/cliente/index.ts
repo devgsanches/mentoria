@@ -18,6 +18,7 @@ const create = async (nome: string) => {
       'SELECT * FROM Cliente WHERE id = ?',
       result.lastID
     )
+
     return cliente
   }
   return null

@@ -14,8 +14,9 @@ const getById = async (id: string) => {
 const create = async (nome: string) => {
   const result = await service.create(nome)
 
-  if (result.lastID) {
-    const cliente = await service.getById(result.lastID)
+  if (result) {
+    const cliente = await service.getById(result.id)
+
     return cliente
   }
   return null
@@ -43,10 +44,4 @@ const remove = async (id: string) => {
   return false
 }
 
-export {
-  getAll,
-  getById,
-  create,
-  update,
-  remove
-}
+export { getAll, getById, create, update, remove }
